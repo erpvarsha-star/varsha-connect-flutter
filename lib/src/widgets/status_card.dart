@@ -23,7 +23,7 @@ class StatusCard extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: effectiveColor.withOpacity(0.14),
+              backgroundColor: effectiveColor.withValues(alpha: 0.14),
               foregroundColor: effectiveColor,
               child: Icon(icon),
             ),

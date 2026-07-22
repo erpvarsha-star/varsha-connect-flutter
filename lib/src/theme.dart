@@ -15,7 +15,7 @@ ThemeData buildVarshaTheme() {
       error: const Color(0xFFC62828),
     ),
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       elevation: 1,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(

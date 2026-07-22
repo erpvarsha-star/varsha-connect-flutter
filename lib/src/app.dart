@@ -76,7 +76,7 @@ class AppShell extends StatelessWidget {
       body: SafeArea(child: child),
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.white,
-        indicatorColor: const Color(0xFFE87722).withOpacity(0.12),
+        indicatorColor: const Color(0xFFE87722).withValues(alpha: 0.12),
         selectedIndex: index,
         onDestinationSelected: (value) {
           final route = switch (value) {
