@@ -95,7 +95,7 @@ class _LeaveFormState extends State<_LeaveForm> {
       title: 'Apply for Leave',
       children: [
         DropdownButtonFormField<String>(
-          value: leaveType,
+          initialValue: leaveType,
           decoration: const InputDecoration(labelText: 'Leave Type'),
           items: const ['EL', 'CL', 'SL'].map((type) => DropdownMenuItem(value: type, child: Text(type))).toList(),
           onChanged: (value) => setState(() => leaveType = value ?? 'CL'),
@@ -137,7 +137,7 @@ class _AdvanceForm extends StatelessWidget {
         const TextField(decoration: InputDecoration(labelText: 'Reason')),
         const SizedBox(height: 12),
         DropdownButtonFormField<int>(
-          value: 1,
+          initialValue: 1,
           decoration: const InputDecoration(labelText: 'Repayment Period'),
           items: const [
             DropdownMenuItem(value: 1, child: Text('1 month')),

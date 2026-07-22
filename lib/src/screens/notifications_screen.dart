@@ -33,8 +33,8 @@ class NotificationsScreen extends StatelessWidget {
         const SizedBox(height: 12),
         FilledButton.icon(
           onPressed: null,
-          icon: Icon(Icons.volume_up_outlined),
-          label: Text('Push notification + sound enabled after Firebase Messaging setup'),
+          icon: const Icon(Icons.volume_up_outlined),
+          label: const Text('Push notification + sound enabled after Firebase Messaging setup'),
         ),
       ],
     );

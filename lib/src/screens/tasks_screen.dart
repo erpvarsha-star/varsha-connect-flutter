@@ -59,7 +59,7 @@ class _ManagerApprovals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _ApprovalTile(title: 'CL leave request', subtitle: 'VFL4001 · 1 day'),
         _ApprovalTile(title: 'Advance request', subtitle: 'VFL4005 · ₹5,000 · 3 months'),
