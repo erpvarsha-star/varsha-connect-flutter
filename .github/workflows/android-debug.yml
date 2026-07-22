@@ -30,23 +30,14 @@ jobs:
           flutter create --platforms=android --org com.varshaforgings .
           mkdir -p android/app
           cp google-services.json android/app/google-services.json
-          python - <<'PY'
-          from pathlib import Path
-
-          app_id = "com.varshaforgings.varshaconnect"
-          gradle_files = [Path("android/app/build.gradle"), Path("android/app/build.gradle.kts")]
-          for path in gradle_files:
-              if not path.exists():
-                  continue
-              text = path.read_text()
-              text = text.replace("com.varshaforgings.varsha_connect", app_id)
-              text = text.replace('namespace = "com.varshaforgings.varsha_connect"', f'namespace = "{app_id}"')
-              text = text.replace("namespace 'com.varshaforgings.varsha_connect'", f"namespace '{app_id}'")
-              if "ndkVersion" not in text:
-                  if "android {" in text:
-                      text = text.replace("android {", 'android {\\n    ndkVersion = "27.0.12077973"', 1)
-              path.write_text(text)
-          PY
+          for file in android/app/build.gradle android/app/build.gradle.kts; do
+            if [ -f "$file" ]; then
+              sed -i 's/com.varshaforgings.varsha_connect/com.varshaforgings.varshaconnect/g' "$file"
+              if ! grep -q "ndkVersion" "$file"; then
+                sed -i '/android {/a\    ndkVersion = "27.0.12077973"' "$file"
+              fi
+            fi
+          done
 
       - name: Install dependencies
         run: flutter pub get

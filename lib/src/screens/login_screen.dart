@@ -29,9 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
     context.read<AppState>().setProfile(
           StaffProfile(
-            empCode: 'DEMO001',
-            name: 'Demo Manager',
-            role: 'manager',
+            empCode: 'VFL4001',
+            name: 'Demo Worker',
+            role: 'worker',
             department: 'Forge Shop',
           ),
         );
