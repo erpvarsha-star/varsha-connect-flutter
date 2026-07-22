@@ -1,7 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/app_state.dart';
+import '../services/attendance_service.dart';
+import '../services/firestore_paths.dart';
+import '../services/firestore_service.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -39,17 +43,78 @@ class _WorkerChecklist extends StatelessWidget {
   }
 }
 
-class _SupervisorTeamConfirm extends StatelessWidget {
+class _SupervisorTeamConfirm extends StatefulWidget {
   const _SupervisorTeamConfirm();
 
   @override
+  State<_SupervisorTeamConfirm> createState() => _SupervisorTeamConfirmState();
+}
+
+class _SupervisorTeamConfirmState extends State<_SupervisorTeamConfirm> {
+  DateTime? lastTapAt;
+
+  Future<void> _confirm(String empCode, bool present) async {
+    final profile = context.read<AppState>().profile;
+    if (profile == null) return;
+    final now = DateTime.now();
+    if (lastTapAt != null && now.difference(lastTapAt!).inSeconds < 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Wait 3 seconds between confirmations')),
+      );
+      return;
+    }
+    lastTapAt = now;
+    await AttendanceService(firestoreService: FirestoreService()).saveSupervisorCheckpoint(
+      empCode: empCode,
+      shiftDate: DateFormat('yyyy-MM-dd').format(now),
+      confirmedBy: profile.empCode,
+      present: present,
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$empCode marked ${present ? 'present' : 'absent'}')),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        _TaskTile(title: 'VFL4001 · Ramesh', subtitle: 'Tap confirm or absent individually'),
-        _TaskTile(title: 'VFL4002 · Suresh', subtitle: '3 second gap enforced'),
-        _TaskTile(title: 'Log casual worker', subtitle: 'Name + ID entry'),
+        _SupervisorTile(empCode: 'VFL4001', name: 'Ramesh', onConfirm: _confirm),
+        _SupervisorTile(empCode: 'VFL4002', name: 'Suresh', onConfirm: _confirm),
+        const _TaskTile(title: 'Log casual worker', subtitle: 'Name + ID entry'),
       ],
+    );
+  }
+}
+
+class _SupervisorTile extends StatelessWidget {
+  const _SupervisorTile({required this.empCode, required this.name, required this.onConfirm});
+
+  final String empCode;
+  final String name;
+  final Future<void> Function(String empCode, bool present) onConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('$empCode / $name', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: FilledButton(onPressed: () => onConfirm(empCode, true), child: const Text('Confirm'))),
+                const SizedBox(width: 8),
+                Expanded(child: OutlinedButton(onPressed: () => onConfirm(empCode, false), child: const Text('Absent'))),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -61,8 +126,18 @@ class _ManagerApprovals extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        _ApprovalTile(title: 'CL leave request', subtitle: 'VFL4001 · 1 day'),
-        _ApprovalTile(title: 'Advance request', subtitle: 'VFL4005 · ₹5,000 · 3 months'),
+        _ApprovalTile(
+          title: 'CL leave request',
+          subtitle: 'VFL4001 / 1 day',
+          collection: FirestorePaths.leaveRequests,
+          requestId: 'demo_leave_request',
+        ),
+        _ApprovalTile(
+          title: 'Advance request',
+          subtitle: 'VFL4005 / Rs 5,000 / 3 months',
+          collection: FirestorePaths.advanceRequests,
+          requestId: 'demo_advance_request',
+        ),
       ],
     );
   }
@@ -70,6 +145,22 @@ class _ManagerApprovals extends StatelessWidget {
 
 class _ShiftPlanner extends StatelessWidget {
   const _ShiftPlanner();
+
+  Future<void> _publish(BuildContext context) async {
+    final profile = context.read<AppState>().profile;
+    if (profile == null) return;
+    await FirestoreService().saveShiftPlan({
+      'week_start': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      'department': profile.department,
+      'published_by': profile.empCode,
+      'status': 'published',
+      'shift_types': ['general', 'first', 'second', 'third', 'day', 'night'],
+    });
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Shift schedule published')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +183,7 @@ class _ShiftPlanner extends StatelessWidget {
               ),
             const SizedBox(height: 12),
             FilledButton.icon(
-              onPressed: () {},
+              onPressed: () => _publish(context),
               icon: const Icon(Icons.notifications_active_outlined),
               label: const Text('Publish schedule'),
             ),
@@ -138,10 +229,32 @@ class _TaskTile extends StatelessWidget {
 }
 
 class _ApprovalTile extends StatelessWidget {
-  const _ApprovalTile({required this.title, required this.subtitle});
+  const _ApprovalTile({
+    required this.title,
+    required this.subtitle,
+    required this.collection,
+    required this.requestId,
+  });
 
   final String title;
   final String subtitle;
+  final String collection;
+  final String requestId;
+
+  Future<void> _review(BuildContext context, String status) async {
+    final profile = context.read<AppState>().profile;
+    if (profile == null) return;
+    await FirestoreService().reviewRequest(
+      collection: collection,
+      requestId: requestId,
+      status: status,
+      reviewedBy: profile.empCode,
+    );
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$title $status')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,14 +270,9 @@ class _ApprovalTile extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Expanded(child: FilledButton(onPressed: () {}, child: const Text('Approve'))),
+                Expanded(child: FilledButton(onPressed: () => _review(context, 'Approved'), child: const Text('Approve'))),
                 const SizedBox(width: 8),
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Reject'),
-                  ),
-                ),
+                Expanded(child: OutlinedButton(onPressed: () => _review(context, 'Rejected'), child: const Text('Reject'))),
               ],
             ),
           ],
