@@ -27,7 +27,15 @@ service cloud.firestore {
     }
 
     function isSupervisorOrAbove() {
-      return signedIn() && (myRole() in ['supervisor', 'manager', 'plant_head']);
+      return signedIn() && (myRole() in ['supervisor', 'manager', 'plant_head', 'hr', 'owner']);
+    }
+
+    function isHrOrAbove() {
+      return signedIn() && (myRole() in ['hr', 'plant_head', 'owner']);
+    }
+
+    function isOwnerOrPlantHead() {
+      return signedIn() && (myRole() in ['owner', 'plant_head']);
     }
 
     match /users/{empCode} {
@@ -119,6 +127,92 @@ service cloud.firestore {
         isSupervisorOrAbove()
       );
       allow create, update: if isManager() || isPlantHead();
+      allow delete: if false;
+    }
+
+    match /attendance_checkpoints/{checkpointId} {
+      allow create: if signedIn() && request.resource.data.emp_code == myEmpCode();
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isSupervisorOrAbove()
+      );
+      allow update: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isSupervisorOrAbove()
+      );
+      allow delete: if false;
+    }
+
+    match /qr_tokens/{tokenId} {
+      allow read: if signedIn();
+      allow write: if isHrOrAbove();
+    }
+
+    match /leave_balances/{balanceId} {
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isManager() ||
+        isHrOrAbove()
+      );
+      allow write: if isHrOrAbove();
+    }
+
+    match /leave_requests/{requestId} {
+      allow create: if signedIn() && request.resource.data.emp_code == myEmpCode();
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isManager() ||
+        isHrOrAbove()
+      );
+      allow update: if isManager() || isHrOrAbove();
+      allow delete: if false;
+    }
+
+    match /salary_advances/{advanceId} {
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isManager() ||
+        isHrOrAbove()
+      );
+      allow write: if isHrOrAbove();
+    }
+
+    match /advance_requests/{requestId} {
+      allow create: if signedIn() && request.resource.data.emp_code == myEmpCode();
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isManager() ||
+        isHrOrAbove()
+      );
+      allow update: if isManager() || isHrOrAbove();
+      allow delete: if false;
+    }
+
+    match /salary_master/{salaryId} {
+      allow read, write: if isHrOrAbove();
+    }
+
+    match /monthly_scores/{scoreId} {
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isManager() ||
+        isHrOrAbove()
+      );
+      allow write: if isManager() || isHrOrAbove();
+    }
+
+    match /mrm_reviews/{reviewId} {
+      allow create, update: if isManager() || isOwnerOrPlantHead();
+      allow read: if isManager() || isOwnerOrPlantHead();
+      allow delete: if false;
+    }
+
+    match /email_tasks/{taskId} {
+      allow read, update: if signedIn() && (
+        resource.data.assigned_to == myEmpCode() ||
+        isOwnerOrPlantHead()
+      );
+      allow create: if isOwnerOrPlantHead();
       allow delete: if false;
     }
 
