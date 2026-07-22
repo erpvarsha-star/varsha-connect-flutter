@@ -30,6 +30,23 @@ jobs:
           flutter create --platforms=android --org com.varshaforgings .
           mkdir -p android/app
           cp google-services.json android/app/google-services.json
+          python - <<'PY'
+          from pathlib import Path
+
+          app_id = "com.varshaforgings.varshaconnect"
+          gradle_files = [Path("android/app/build.gradle"), Path("android/app/build.gradle.kts")]
+          for path in gradle_files:
+              if not path.exists():
+                  continue
+              text = path.read_text()
+              text = text.replace("com.varshaforgings.varsha_connect", app_id)
+              text = text.replace('namespace = "com.varshaforgings.varsha_connect"', f'namespace = "{app_id}"')
+              text = text.replace("namespace 'com.varshaforgings.varsha_connect'", f"namespace '{app_id}'")
+              if "ndkVersion" not in text:
+                  if "android {" in text:
+                      text = text.replace("android {", 'android {\\n    ndkVersion = "27.0.12077973"', 1)
+              path.write_text(text)
+          PY
 
       - name: Install dependencies
         run: flutter pub get
@@ -38,10 +55,20 @@ jobs:
         run: flutter analyze
 
       - name: Build debug APK
-        run: flutter build apk --debug
+        run: |
+          set -o pipefail
+          flutter build apk --debug 2>&1 | tee build-debug.log
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: varsha-connect-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: varsha-connect-build-log
+          path: build-debug.log
