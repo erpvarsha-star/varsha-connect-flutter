@@ -1,0 +1,17 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+android/.gradle/
+android/app/build/
+ios/
+macos/
+linux/
+windows/
+web/
+*.iml
+.idea/
+.vscode/
+firebase-debug.log
+node_modules/

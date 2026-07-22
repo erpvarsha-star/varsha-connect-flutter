@@ -1,0 +1,14 @@
+{
+  "plant_config": {
+    "main": {
+      "plant_name": "Varsha Forgings Pvt Ltd",
+      "geofence_lat": 19.8383935925407,
+      "geofence_lng": 75.23638998304483,
+      "geofence_radius_meters": 200,
+      "timezone": "Asia/Kolkata",
+      "attendance_enabled": true,
+      "qr_required": false,
+      "daily_qr_enabled": false
+    }
+  }
+}

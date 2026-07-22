@@ -1,0 +1,52 @@
+{
+  "shifts": {
+    "general": {
+      "shift_id": "general",
+      "name": "General",
+      "start_time": "09:00",
+      "end_time": "18:00",
+      "grace_minutes": 10,
+      "active": true
+    },
+    "first": {
+      "shift_id": "first",
+      "name": "First Shift",
+      "start_time": "07:00",
+      "end_time": "15:30",
+      "grace_minutes": 10,
+      "active": true
+    },
+    "second": {
+      "shift_id": "second",
+      "name": "Second Shift",
+      "start_time": "15:30",
+      "end_time": "00:00",
+      "grace_minutes": 10,
+      "active": true
+    },
+    "third": {
+      "shift_id": "third",
+      "name": "Third Shift",
+      "start_time": "00:00",
+      "end_time": "07:00",
+      "grace_minutes": 10,
+      "active": true
+    },
+    "day": {
+      "shift_id": "day",
+      "name": "Day Shift",
+      "start_time": "07:00",
+      "end_time": "19:00",
+      "grace_minutes": 10,
+      "active": true
+    },
+    "night": {
+      "shift_id": "night",
+      "name": "Night Shift",
+      "start_time": "19:00",
+      "end_time": "07:00",
+      "grace_minutes": 10,
+      "active": true
+    }
+  }
+}

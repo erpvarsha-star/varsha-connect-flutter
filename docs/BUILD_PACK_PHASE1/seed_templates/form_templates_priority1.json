@@ -1,0 +1,64 @@
+{
+  "form_templates": {
+    "N1": {
+      "form_code": "N1",
+      "title": "Forge Shop Hourly Production Log",
+      "department": "Forge Shop",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    },
+    "N2": {
+      "form_code": "N2",
+      "title": "Press Shop Hourly Production Log",
+      "department": "Press Shop",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    },
+    "N3": {
+      "form_code": "N3",
+      "title": "Heat Treatment Batch Log",
+      "department": "Heat Treatment",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    },
+    "N4": {
+      "form_code": "N4",
+      "title": "Maintenance Daily PM Checklist - Mechanical",
+      "department": "Maintenance",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    },
+    "N5": {
+      "form_code": "N5",
+      "title": "Electricity Daily Consumption Log - Electrical",
+      "department": "Maintenance",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    },
+    "N6": {
+      "form_code": "N6",
+      "title": "Shift Report For Production Departments",
+      "department": "Production",
+      "frequency": "daily",
+      "due_time": "shift_end",
+      "role_scope": ["shift_incharge", "supervisor"],
+      "priority": 1,
+      "active": true
+    }
+  }
+}

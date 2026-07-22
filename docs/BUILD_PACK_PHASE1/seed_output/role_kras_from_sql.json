@@ -1,0 +1,202 @@
+{
+  "role_kras": {
+    "shift_incharge_1_attendance_discipline": {
+      "kra_id": "shift_incharge_1_attendance_discipline",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 1,
+      "title": "Attendance discipline",
+      "title_hi": "हाज़िरी अनुशासन",
+      "description": "Present on time, minimal late arrivals, zero unannounced absences",
+      "weight_pct": 40,
+      "active": true
+    },
+    "shift_incharge_2_work_completion": {
+      "kra_id": "shift_incharge_2_work_completion",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 2,
+      "title": "Work completion",
+      "title_hi": "काम पूरा करना",
+      "description": "End-of-shift checklist, maintenance observations, machine care",
+      "weight_pct": 40,
+      "active": true
+    },
+    "shift_incharge_3_safety_compliance": {
+      "kra_id": "shift_incharge_3_safety_compliance",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 3,
+      "title": "Safety compliance",
+      "title_hi": "सुरक्षा अनुपालन",
+      "description": "Safety gear worn, zero unreported machine issues, cleanliness",
+      "weight_pct": 20,
+      "active": true
+    },
+    "supervisor_1_team_attendance_management": {
+      "kra_id": "supervisor_1_team_attendance_management",
+      "role": "supervisor",
+      "legacy_role": "supervisor",
+      "kra_number": 1,
+      "title": "Team attendance management",
+      "title_hi": "टीम हाज़िरी प्रबंधन",
+      "description": "Ensure team present, confirmed on floor, casual workers logged",
+      "weight_pct": 35,
+      "active": true
+    },
+    "supervisor_2_operational_reporting": {
+      "kra_id": "supervisor_2_operational_reporting",
+      "role": "supervisor",
+      "legacy_role": "supervisor",
+      "kra_number": 2,
+      "title": "Operational reporting",
+      "title_hi": "परिचालन रिपोर्टिंग",
+      "description": "Shift report on time, data tasks on time, observations acknowledged",
+      "weight_pct": 35,
+      "active": true
+    },
+    "supervisor_3_team_development": {
+      "kra_id": "supervisor_3_team_development",
+      "role": "supervisor",
+      "legacy_role": "supervisor",
+      "kra_number": 3,
+      "title": "Team development",
+      "title_hi": "टीम विकास",
+      "description": "Team score improving, warnings issued on time, no overrides",
+      "weight_pct": 30,
+      "active": true
+    },
+    "manager_1_department_performance": {
+      "kra_id": "manager_1_department_performance",
+      "role": "manager",
+      "legacy_role": "manager",
+      "kra_number": 1,
+      "title": "Department performance",
+      "title_hi": "विभाग प्रदर्शन",
+      "description": "Dept avg score, attendance %, zero overdue maintenance tasks",
+      "weight_pct": 35,
+      "active": true
+    },
+    "manager_2_response_time_and_approvals": {
+      "kra_id": "manager_2_response_time_and_approvals",
+      "role": "manager",
+      "legacy_role": "manager",
+      "kra_number": 2,
+      "title": "Response time and approvals",
+      "title_hi": "प्रतिक्रिया समय",
+      "description": "Leave approvals within 24hrs, escalations resolved within 48hrs",
+      "weight_pct": 35,
+      "active": true
+    },
+    "manager_3_data_accountability": {
+      "kra_id": "manager_3_data_accountability",
+      "role": "manager",
+      "legacy_role": "manager",
+      "kra_number": 3,
+      "title": "Data accountability",
+      "title_hi": "डेटा जवाबदेही",
+      "description": "Data collection on time, override rate controlled",
+      "weight_pct": 30,
+      "active": true
+    },
+    "plant_head_1_plant_wide_operations": {
+      "kra_id": "plant_head_1_plant_wide_operations",
+      "role": "plant_head",
+      "legacy_role": "plant_head",
+      "kra_number": 1,
+      "title": "Plant-wide operations",
+      "title_hi": "प्लांट-व्यापी संचालन",
+      "description": "All dept attendance healthy, escalations resolved, data complete",
+      "weight_pct": 40,
+      "active": true
+    },
+    "plant_head_2_process_integrity": {
+      "kra_id": "plant_head_2_process_integrity",
+      "role": "plant_head",
+      "legacy_role": "plant_head",
+      "kra_number": 2,
+      "title": "Process integrity",
+      "title_hi": "प्रक्रिया अखंडता",
+      "description": "PR-PO-GRN-Invoice matches complete, zero unresolved discrepancies",
+      "weight_pct": 35,
+      "active": true
+    },
+    "plant_head_3_customer_response": {
+      "kra_id": "plant_head_3_customer_response",
+      "role": "plant_head",
+      "legacy_role": "plant_head",
+      "kra_number": 3,
+      "title": "Customer response",
+      "title_hi": "ग्राहक प्रतिक्रिया",
+      "description": "Email response rate, escalation resolution speed",
+      "weight_pct": 25,
+      "active": true
+    },
+    "shift_incharge_1_gate_and_vehicle_control": {
+      "kra_id": "shift_incharge_1_gate_and_vehicle_control",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 1,
+      "title": "Gate and vehicle control",
+      "title_hi": "गेट और वाहन नियंत्रण",
+      "description": "Every vehicle logged with complete details, worker verification",
+      "weight_pct": 50,
+      "active": true
+    },
+    "shift_incharge_2_shift_log_closure": {
+      "kra_id": "shift_incharge_2_shift_log_closure",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 2,
+      "title": "Shift log closure",
+      "title_hi": "शिफ्ट लॉग बंद",
+      "description": "Vehicle log complete before shift ends, discrepancies flagged same shift",
+      "weight_pct": 50,
+      "active": true
+    },
+    "shift_incharge_1_grn_completeness": {
+      "kra_id": "shift_incharge_1_grn_completeness",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 1,
+      "title": "GRN completeness",
+      "title_hi": "GRN पूर्णता",
+      "description": "GRN raised same day for every delivery, zero pending GRNs at EOD",
+      "weight_pct": 50,
+      "active": true
+    },
+    "shift_incharge_2_document_management": {
+      "kra_id": "shift_incharge_2_document_management",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 2,
+      "title": "Document management",
+      "title_hi": "दस्तावेज़ प्रबंधन",
+      "description": "All challans scanned and uploaded same day, zero missing documents",
+      "weight_pct": 50,
+      "active": true
+    },
+    "shift_incharge_1_invoice_processing": {
+      "kra_id": "shift_incharge_1_invoice_processing",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 1,
+      "title": "Invoice processing",
+      "title_hi": "चालान प्रसंस्करण",
+      "description": "Every invoice entered same day, scanned before entry",
+      "weight_pct": 50,
+      "active": true
+    },
+    "shift_incharge_2_three_way_match": {
+      "kra_id": "shift_incharge_2_three_way_match",
+      "role": "shift_incharge",
+      "legacy_role": "worker",
+      "kra_number": 2,
+      "title": "Three-way match",
+      "title_hi": "तीन-तरफा मिलान",
+      "description": "No payment without complete PR-PO-GRN-Invoice match",
+      "weight_pct": 50,
+      "active": true
+    }
+  }
+}

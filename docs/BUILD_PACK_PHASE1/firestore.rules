@@ -1,0 +1,138 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function myEmpCode() {
+      return request.auth.token.emp_code;
+    }
+
+    function myRole() {
+      return request.auth.token.role;
+    }
+
+    function myDepartment() {
+      return request.auth.token.department;
+    }
+
+    function isPlantHead() {
+      return signedIn() && myRole() == 'plant_head';
+    }
+
+    function isManager() {
+      return signedIn() && (myRole() == 'manager' || myRole() == 'plant_head');
+    }
+
+    function isSupervisorOrAbove() {
+      return signedIn() && (myRole() in ['supervisor', 'manager', 'plant_head']);
+    }
+
+    match /users/{empCode} {
+      allow read: if signedIn() && (
+        empCode == myEmpCode() ||
+        isPlantHead() ||
+        (isManager() && resource.data.department == myDepartment()) ||
+        (isSupervisorOrAbove() && resource.data.reporting_manager_emp_code == myEmpCode())
+      );
+      allow create, update, delete: if false;
+    }
+
+    match /departments/{departmentId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /shifts/{shiftId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /plant_config/{configId} {
+      allow read: if signedIn();
+      allow write: if isPlantHead();
+    }
+
+    match /attendance_logs/{attendanceId} {
+      allow create: if signedIn() && request.resource.data.emp_code == myEmpCode();
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isPlantHead() ||
+        (isManager() && resource.data.department == myDepartment()) ||
+        isSupervisorOrAbove()
+      );
+      allow update, delete: if false;
+    }
+
+    match /form_templates/{formId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /form_responses/{responseId} {
+      allow create: if signedIn() && request.resource.data.emp_code == myEmpCode();
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isPlantHead() ||
+        (isManager() && resource.data.department == myDepartment()) ||
+        isSupervisorOrAbove()
+      );
+      allow update: if isManager() || isPlantHead();
+      allow delete: if false;
+    }
+
+    match /tasks/{taskId} {
+      allow read: if signedIn() && (
+        resource.data.assigned_to == myEmpCode() ||
+        resource.data.assigned_by == myEmpCode() ||
+        isPlantHead() ||
+        (isManager() && resource.data.department == myDepartment()) ||
+        isSupervisorOrAbove()
+      );
+      allow create: if isSupervisorOrAbove();
+      allow update: if signedIn() && (
+        resource.data.assigned_to == myEmpCode() ||
+        resource.data.assigned_by == myEmpCode() ||
+        isManager() ||
+        isPlantHead()
+      );
+      allow delete: if isPlantHead();
+    }
+
+    match /role_kras/{kraId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /role_kpis/{kpiId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /performance_scores/{scoreId} {
+      allow read: if signedIn() && (
+        resource.data.emp_code == myEmpCode() ||
+        isPlantHead() ||
+        isManager() ||
+        isSupervisorOrAbove()
+      );
+      allow create, update: if isManager() || isPlantHead();
+      allow delete: if false;
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if signedIn() && resource.data.recipient_emp_code == myEmpCode();
+      allow update: if signedIn() &&
+        resource.data.recipient_emp_code == myEmpCode() &&
+        request.resource.data.diff(resource.data).changedKeys().hasOnly(['read', 'read_at']);
+      allow create, delete: if false;
+    }
+
+    match /audit_logs/{auditId} {
+      allow read: if isPlantHead();
+      allow write: if false;
+    }
+  }
+}

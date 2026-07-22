@@ -1,0 +1,221 @@
+{
+  "departments": {
+    "production": {
+      "department_id": "production",
+      "name": "Production",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "heat_treatment": {
+      "department_id": "heat_treatment",
+      "name": "Heat Treatment",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "machine_shop": {
+      "department_id": "machine_shop",
+      "name": "Machine shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "accounts": {
+      "department_id": "accounts",
+      "name": "Accounts",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "purchase": {
+      "department_id": "purchase",
+      "name": "Purchase",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "maintenance": {
+      "department_id": "maintenance",
+      "name": "Maintenance",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "human_resource": {
+      "department_id": "human_resource",
+      "name": "Human Resource",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "die_shop": {
+      "department_id": "die_shop",
+      "name": "Die Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "forge_shop": {
+      "department_id": "forge_shop",
+      "name": "Forge Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "vmc_shop": {
+      "department_id": "vmc_shop",
+      "name": "VMC Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "design": {
+      "department_id": "design",
+      "name": "Design",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "quality": {
+      "department_id": "quality",
+      "name": "Quality",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "administration": {
+      "department_id": "administration",
+      "name": "Administration",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "cutting_shop": {
+      "department_id": "cutting_shop",
+      "name": "Cutting Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "sales_logistics": {
+      "department_id": "sales_logistics",
+      "name": "Sales & Logistics",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "stores": {
+      "department_id": "stores",
+      "name": "Stores",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "press_shop": {
+      "department_id": "press_shop",
+      "name": "Press Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "final_shop": {
+      "department_id": "final_shop",
+      "name": "Final Shop",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "shearing_operator": {
+      "department_id": "shearing_operator",
+      "name": "Shearing Operator",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "miller": {
+      "department_id": "miller",
+      "name": "Miller",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "fitter": {
+      "department_id": "fitter",
+      "name": "Fitter",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "turner": {
+      "department_id": "turner",
+      "name": "Turner",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "ropeman": {
+      "department_id": "ropeman",
+      "name": "Ropeman",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "furnace_operator": {
+      "department_id": "furnace_operator",
+      "name": "Furnace Operator",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "grinder": {
+      "department_id": "grinder",
+      "name": "Grinder",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "die_finisher": {
+      "department_id": "die_finisher",
+      "name": "Die Finisher",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "forger": {
+      "department_id": "forger",
+      "name": "Forger",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "trimmer": {
+      "department_id": "trimmer",
+      "name": "Trimmer",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "oilman": {
+      "department_id": "oilman",
+      "name": "Oilman",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "mpi_operator": {
+      "department_id": "mpi_operator",
+      "name": "MPI Operator",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    },
+    "operator": {
+      "department_id": "operator",
+      "name": "Operator",
+      "active": true,
+      "manager_emp_code": "",
+      "plant_head_emp_code": ""
+    }
+  }
+}
