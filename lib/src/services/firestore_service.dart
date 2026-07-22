@@ -44,6 +44,11 @@ class FirestoreService {
     return firestore.collection(FirestorePaths.attendanceLogs).doc(id).set(data, SetOptions(merge: true));
   }
 
+  Future<void> saveAttendanceCheckpoint(Map<String, dynamic> data) {
+    final id = '${data['emp_code']}_${data['shift_date']}';
+    return firestore.collection(FirestorePaths.attendanceCheckpoints).doc(id).set(data, SetOptions(merge: true));
+  }
+
   Future<void> submitFormResponse(Map<String, dynamic> data) {
     return firestore.collection(FirestorePaths.formResponses).add(data);
   }
@@ -68,5 +73,44 @@ class FirestoreService {
   Future<void> savePerformanceScore(Map<String, dynamic> data) {
     final id = '${data['emp_code']}_${data['period_start']}_${data['period_end']}';
     return firestore.collection(FirestorePaths.performanceScores).doc(id).set(data, SetOptions(merge: true));
+  }
+
+  Future<void> submitLeaveRequest(Map<String, dynamic> data) {
+    return firestore.collection(FirestorePaths.leaveRequests).add({
+      ...data,
+      'status': 'Pending',
+      'applied_at': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> submitAdvanceRequest(Map<String, dynamic> data) {
+    return firestore.collection(FirestorePaths.advanceRequests).add({
+      ...data,
+      'status': 'Pending',
+      'applied_at': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> reviewRequest({
+    required String collection,
+    required String requestId,
+    required String status,
+    required String reviewedBy,
+  }) {
+    return firestore.collection(collection).doc(requestId).update({
+      'status': status,
+      'reviewed_by': reviewedBy,
+      'reviewed_at': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> saveShiftPlan(Map<String, dynamic> data) {
+    final id = '${data['week_start']}_${data['department']}';
+    return firestore.collection(FirestorePaths.shifts).doc(id).set(data, SetOptions(merge: true));
+  }
+
+  Future<void> saveMrmReview(Map<String, dynamic> data) {
+    final id = '${data['month']}_${data['department']}';
+    return firestore.collection(FirestorePaths.mrmReviews).doc(id).set(data, SetOptions(merge: true));
   }
 }

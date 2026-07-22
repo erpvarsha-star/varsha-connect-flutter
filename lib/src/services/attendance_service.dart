@@ -56,6 +56,55 @@ class AttendanceService {
 
     return AttendanceResult.success();
   }
+
+  Future<void> saveCheckpointOne({
+    required String empCode,
+    required String department,
+    required String shiftDate,
+    required bool gpsValid,
+    required bool qrValid,
+  }) {
+    return firestoreService.saveAttendanceCheckpoint({
+      'emp_code': empCode,
+      'department': department,
+      'shift_date': shiftDate,
+      'checkpoint_1_time': FieldValue.serverTimestamp(),
+      'checkpoint_1_gps_valid': gpsValid,
+      'checkpoint_1_qr_valid': qrValid,
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> saveSecurityCheckpoint({
+    required String empCode,
+    required String shiftDate,
+    required String confirmedBy,
+  }) {
+    return firestoreService.saveAttendanceCheckpoint({
+      'emp_code': empCode,
+      'shift_date': shiftDate,
+      'checkpoint_2_time': FieldValue.serverTimestamp(),
+      'checkpoint_2_confirmed_by': confirmedBy,
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> saveSupervisorCheckpoint({
+    required String empCode,
+    required String shiftDate,
+    required String confirmedBy,
+    required bool present,
+  }) {
+    return firestoreService.saveAttendanceCheckpoint({
+      'emp_code': empCode,
+      'shift_date': shiftDate,
+      'checkpoint_3_time': FieldValue.serverTimestamp(),
+      'checkpoint_3_confirmed_by': confirmedBy,
+      'checkpoint_3_status': present ? 'P' : 'A',
+      if (present) 'status': 'P',
+      'updated_at': FieldValue.serverTimestamp(),
+    });
+  }
 }
 
 class AttendanceResult {
