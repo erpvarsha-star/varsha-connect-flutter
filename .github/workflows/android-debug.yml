@@ -30,14 +30,44 @@ jobs:
           flutter create --platforms=android --org com.varshaforgings .
           mkdir -p android/app
           cp google-services.json android/app/google-services.json
-          for file in android/app/build.gradle android/app/build.gradle.kts; do
-            if [ -f "$file" ]; then
-              sed -i 's/com.varshaforgings.varsha_connect/com.varshaforgings.varshaconnect/g' "$file"
-              if ! grep -q "ndkVersion" "$file"; then
-                sed -i '/android {/a\    ndkVersion = "27.0.12077973"' "$file"
-              fi
-            fi
-          done
+          python - <<'PY'
+          from pathlib import Path
+
+          app_id = "com.varshaforgings.varshaconnect"
+
+          kts = Path("android/app/build.gradle.kts")
+          groovy = Path("android/app/build.gradle")
+
+          if kts.exists():
+              text = kts.read_text()
+              text = text.replace("com.varshaforgings.varsha_connect", app_id)
+              if "ndkVersion" not in text:
+                  text = text.replace("android {", 'android {\\n    ndkVersion = "27.0.12077973"', 1)
+              if "isCoreLibraryDesugaringEnabled" not in text:
+                  text = text.replace(
+                      "compileOptions {",
+                      "compileOptions {\\n        isCoreLibraryDesugaringEnabled = true",
+                      1,
+                  )
+              if "desugar_jdk_libs" not in text:
+                  text += '\\n\\ndependencies {\\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")\\n}\\n'
+              kts.write_text(text)
+
+          if groovy.exists():
+              text = groovy.read_text()
+              text = text.replace("com.varshaforgings.varsha_connect", app_id)
+              if "ndkVersion" not in text:
+                  text = text.replace("android {", 'android {\\n    ndkVersion "27.0.12077973"', 1)
+              if "coreLibraryDesugaringEnabled" not in text:
+                  text = text.replace(
+                      "compileOptions {",
+                      "compileOptions {\\n        coreLibraryDesugaringEnabled true",
+                      1,
+                  )
+              if "desugar_jdk_libs" not in text:
+                  text += "\\n\\ndependencies {\\n    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'\\n}\\n"
+              groovy.write_text(text)
+          PY
 
       - name: Install dependencies
         run: flutter pub get
